@@ -6,6 +6,7 @@ import './config/db';
 
 //import routes
 import appRoute from "./api/routes/app.route";
+import userRoute from "./api/routes/user.route";
 
 //env config
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1', appRoute);
+app.use('/api/v1/user', userRoute);
 
 // start application
 app.listen(PORT, () => {
