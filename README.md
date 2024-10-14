@@ -10,6 +10,9 @@ Clone the Github Repository.
 
 ### `npm install` in the root folder.
 
+Create a Database called CourierService Database and tables in PgAdmin.
+For that run the SQL file which attached.
+
 Create .env file in the root folder and add below variables.
 ### `DATABASE_URL=postgres://postgres:1234@localhost:5432/CourierService`
 ### `PORT=5000`
