@@ -149,7 +149,7 @@ export const loginUser = async (req: Request, res: Response) => {
             );
         }
 
-        const token = jwt.sign({ user_id: user.rows[0].user_id }, process.env.JWT_SECRET!);
+        const token = jwt.sign({ user_id: user.rows[0].user_id, role: user.rows[0].role }, process.env.JWT_SECRET!);
 
         logger.info("User login query was successful");
         console.log("User login query was successful");
