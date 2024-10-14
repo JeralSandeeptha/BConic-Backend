@@ -1,4 +1,4 @@
-# Getting started to setup and run React Project Locally
+# Getting started to setup and run Express API Locally
 
 Prequsites
 `Nodejs`
