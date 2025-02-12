@@ -28,19 +28,19 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 ## For the testing setup. 
 
 -  Firt need to install related dependencies.
-```bash
-npm i jest ts-jest @types/jest supertest @types/supertest
+    ```bash
+    npm i jest ts-jest @types/jest supertest @types/supertest
 
 - Then we need to configure the jest. For that,
-```bash
-npx ts-jest config:init
+    ```bash
+    npx ts-jest config:init
 
 - Then we need to add a script for testing.
-```bash
-"test": "jest"
+    ```bash
+    "test": "jest"
 
 - If we want confinous watching for test files
-```bash
-"test": "jest --watchAll"
+    ```bash
+    "test": "jest --watchAll"
 
 
