@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "tsx ./src/index.ts",
-    "dev": "nodemon",
+    "dev": "tsx watch ./src/index.ts",
     "build": "tsc",
     "test": "jest --watchAll"
   },

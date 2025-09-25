@@ -47,9 +47,15 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 ## Notes
 - We are using node_modules and sometimes can conflict with the bind volumes. So we need to seperate those two node_modules. So make sure to add like this.
 ```yaml
+# . means current directory
     volumes:
-      - ../app/BConic-Backend:/usr/src/app
+      - .:/app
       - /app/node_modules
 ```
-- We are using the bcrypt. It is can conflicting previous point.
-So make sure to add node_modules to `.dockerignore` file.
+- We are using the bcrypt. It is can conflicting previous point. So make sure to add node_modules to `.dockerignore` file.
+- If we are using dockerization for docker use specific hot reloading `env` for the container.
+```yaml
+environment:
+    - CHOKIDAR_USEPOLLING=true
+    - WATCHPACK_POLLING=true
+```

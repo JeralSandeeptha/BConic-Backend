@@ -20,6 +20,8 @@ services:
       - POSTGRES_USER=jeral
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=bconic_db
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     depends_on:
       - postgres
   postgres:

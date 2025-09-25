@@ -11,8 +11,8 @@ const getApplication = (_req: Request, res: Response) => {
         return res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
-                "Application API checking query was success 1",
-                "Application API checking query was success 1"
+                "Application API checking query was success",
+                "Application API checking query was success"
             )
         );
     } catch (error: any) {
