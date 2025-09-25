@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import logger from "./utils/logger";
 import './config/db';
+import path from 'path';
 
 //import routes
 import appRoute from "./api/routes/app.route";
@@ -10,10 +11,10 @@ import userRoute from "./api/routes/user.route";
 import courierRoute from "./api/routes/courier.route";
 
 //env config
-dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 const app: Application = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middlewares
 app.use(cors());

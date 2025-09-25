@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: bconic_backend_container
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgresql://jeral:1234@bconic_db_container:5432/bconic_db
+      - PORT=5000
+      - NODE_ENV=development
+      - JWT_SECRET=secret
+      - POSTGRES_USER=jeral
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=bconic_db
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13
+    container_name: bconic_db_container
+    environment:
+      - POSTGRES_USER=jeral
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=bconic_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker_volumes/postgres:/var/lib/postgresql/data
+  pgAdmin:
+    image: elestio/pgadmin:latest
+    container_name: bconic_pgadmin_container
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=jeral@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=1234
+    ports:
+      - "5433:80"
+    depends_on:
+      - postgres

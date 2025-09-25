@@ -44,3 +44,12 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
     "test": "jest --watchAll"
 
 
+## Notes
+- We are using node_modules and sometimes can conflict with the bind volumes. So we need to seperate those two node_modules. So make sure to add like this.
+```yaml
+    volumes:
+      - ../app/BConic-Backend:/usr/src/app
+      - /app/node_modules
+```
+- We are using the bcrypt. It is can conflicting previous point.
+So make sure to add node_modules to `.dockerignore` file.

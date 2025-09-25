@@ -4,15 +4,15 @@ import SuccessResponse from "../../utils/SuccessResponse";
 import ErrorResponse from "../../utils/ErrorResponse";
 import HTTP_STATUS from "../models/enums/HttpStatus";
 
-const getApplication = (req: Request, res: Response) => {
+const getApplication = (_req: Request, res: Response) => {
     try {
         logger.info("Welcome to Courier Service API");
         console.log("Welcome to Courier Service API");
         return res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
-                "Application API checking query was success",
-                "Application API checking query was success"
+                "Application API checking query was success 1",
+                "Application API checking query was success 1"
             )
         );
     } catch (error: any) {
