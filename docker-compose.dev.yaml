@@ -46,3 +46,41 @@ services:
       - "5433:80"
     depends_on:
       - postgres
+  jenkins:
+    image: jenkins/jenkins:latest
+    container_name: bconic_jenkins_container
+    privileged: true
+    restart: always
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./docker_volumes/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+  sonarqube:
+    image: sonarqube:latest
+    container_name: bconic_sonarqube_container
+    restart: always
+    depends_on:
+      - sonarqube_db
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube_db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - ./docker_volumes/sonarqube/sonarqube_data:/opt/sonarqube/data
+      - ./docker_volumes/sonarqube/sonarqube_logs:/opt/sonarqube/logs
+      - ./docker_volumes/sonarqube/sonarqube_extensions:/opt/sonarqube/extensions
+  sonarqube_db:
+    image: postgres:13
+    container_name: bconic_sonarqube_db_container
+    restart: always
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
+    volumes:
+      - ./docker_volumes/postgres_sonarqube:/var/lib/postgresql/data
