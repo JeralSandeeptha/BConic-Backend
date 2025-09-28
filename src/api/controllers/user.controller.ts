@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { RequestHandler } from "express";
 import logger from "../../utils/logger";
 import SuccessResponse from "../../utils/SuccessResponse";
 import ErrorResponse from "../../utils/ErrorResponse";
@@ -10,7 +10,7 @@ import { UserRequestDTO } from "../models/interfaces/requestDTO/UserRequestDTO";
 import { UpdateUserRequestDTO } from "../models/interfaces/requestDTO/UpdateUserRequestDTO";
 import { AuthRequestDTO } from "../models/interfaces/requestDTO/AuthRequestDTO";
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUser: RequestHandler = async (req, res) => {
     try {
         const { email, password, first_name, last_name, address, mobile }: UserRequestDTO = req.body;
 
@@ -24,7 +24,7 @@ export const registerUser = async (req: Request, res: Response) => {
         if (existingUser.rowCount) {
             logger.error("Already have an user for this email");
             console.log("Already have an user for this email");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Register user query was falied",
@@ -43,7 +43,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
         logger.info("Register user query was successful");
         console.log("Register user query was successful");
-        return res.status(HTTP_STATUS.CREATED).json(
+        res.status(HTTP_STATUS.CREATED).json(
             new SuccessResponse(
                 HTTP_STATUS.CREATED,
                 "Register user query was successful",
@@ -53,7 +53,7 @@ export const registerUser = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Register user query was failed : ${error.message}`);
         console.log(`Register user query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Register user query was failed",
@@ -63,7 +63,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 }
 
-export const registerAdminUser = async (req: Request, res: Response) => {
+export const registerAdminUser: RequestHandler = async (req, res) => {
     try {
         const { email, password, first_name, last_name, address, mobile }: UserRequestDTO = req.body;
 
@@ -77,7 +77,7 @@ export const registerAdminUser = async (req: Request, res: Response) => {
         if (existingUser.rowCount) {
             logger.error("Already have an user for this email");
             console.log("Already have an user for this email");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Register user query was falied",
@@ -96,7 +96,7 @@ export const registerAdminUser = async (req: Request, res: Response) => {
 
         logger.info("Register user query was successful");
         console.log("Register user query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.CREATED,
                 "Register user query was successful",
@@ -106,7 +106,7 @@ export const registerAdminUser = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Register user query was failed : ${error.message}`);
         console.log(`Register user query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Register user query was failed",
@@ -116,7 +116,7 @@ export const registerAdminUser = async (req: Request, res: Response) => {
     }
 }
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser: RequestHandler = async (req, res) => {
     try {
 
         const { email, password }: AuthRequestDTO = req.body;
@@ -126,7 +126,7 @@ export const loginUser = async (req: Request, res: Response) => {
         if (user.rows.length === 0) {
             logger.warn("Email is incorrect");
             console.log("Email is incorrect");
-            return res.status(HTTP_STATUS.NOT_FOUND).json(
+            res.status(HTTP_STATUS.NOT_FOUND).json(
                 new ErrorResponse(
                     HTTP_STATUS.NOT_FOUND,
                     "User login query was failed",
@@ -140,7 +140,7 @@ export const loginUser = async (req: Request, res: Response) => {
         if (!validPassword) {
             logger.warn("Password is incorrect");
             console.log("Password is incorrect");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "User login query was failed",
@@ -153,7 +153,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
         logger.info("User login query was successful");
         console.log("User login query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.CREATED,
                 "User login query was successful",
@@ -166,7 +166,7 @@ export const loginUser = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`User login query was failed : ${error.message}`);
         console.log(`User login query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "User login query was failed",
@@ -176,7 +176,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 }
 
-export const getSingleUserById = async (req: Request, res: Response) => {
+export const getSingleUserById: RequestHandler = async (req, res) => {
     try {
 
         const { userId } = req.params;
@@ -184,7 +184,7 @@ export const getSingleUserById = async (req: Request, res: Response) => {
         if (!userId) {
             logger.error("UserId not found");
             console.log("UserId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Get single user query was failed",
@@ -201,7 +201,7 @@ export const getSingleUserById = async (req: Request, res: Response) => {
         if (!existingUser.rowCount) {
             logger.error("User not found");
             console.log("User not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Get single user query was failed",
@@ -212,7 +212,7 @@ export const getSingleUserById = async (req: Request, res: Response) => {
 
         logger.info("Get single user query was successful");
         console.log("Get single user query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
                 "Get single user query was successful",
@@ -222,7 +222,7 @@ export const getSingleUserById = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Get single user query was failed : ${error.message}`);
         console.log(`Get single user query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Get single user query was failed",
@@ -232,7 +232,7 @@ export const getSingleUserById = async (req: Request, res: Response) => {
     }
 }
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser: RequestHandler = async (req, res) => {
     try {
 
         const { userId } = req.params;
@@ -242,7 +242,7 @@ export const updateUser = async (req: Request, res: Response) => {
         if (!userId) {
             logger.error("UserId not found");
             console.log("UserId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Update user query was failed",
@@ -259,7 +259,7 @@ export const updateUser = async (req: Request, res: Response) => {
         if (!existingUser.rowCount) {
             logger.error("User not found");
             console.log("User not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Update user query was failed",
@@ -298,7 +298,7 @@ export const updateUser = async (req: Request, res: Response) => {
         if (updatedFields.length === 0) {
             logger.warn("No fields to update in user");
             console.log("No fields to update in user");
-            return res.status(HTTP_STATUS.NO_CONTENT).json(
+            res.status(HTTP_STATUS.NO_CONTENT).json(
                 new ErrorResponse(
                     HTTP_STATUS.NOT_FOUND,
                     "Update user query was aborted",
@@ -319,7 +319,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
         logger.info("Update user query was successful");
         console.log("Update user query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
                 "Update user query was successful",
@@ -329,7 +329,7 @@ export const updateUser = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Update user query was failed : ${error.message}`);
         console.log(`Update user query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Update user query was failed",
@@ -339,7 +339,7 @@ export const updateUser = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser: RequestHandler = async (req, res) => {
     try {
 
         const { userId } = req.params;
@@ -347,7 +347,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         if (!userId) {
             logger.error("UserId not found");
             console.log("UserId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Delete user query was failed",
@@ -364,7 +364,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         if (!existingUser.rowCount) {
             logger.error("User not found");
             console.log("User not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Delete single user query was failed",
@@ -380,7 +380,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
         logger.info("Delete user query was successful");
         console.log("Delete user query was successful");
-        return res.status(HTTP_STATUS.NO_CONTENT).json(
+        res.status(HTTP_STATUS.NO_CONTENT).json(
             new SuccessResponse(
                 HTTP_STATUS.NO_CONTENT,
                 "Delete user query was successful",
@@ -390,7 +390,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Delete user query was failed : ${error.message}`);
         console.log(`Delete user query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Delete user query was failed",

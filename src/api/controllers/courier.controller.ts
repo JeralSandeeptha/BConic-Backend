@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { RequestHandler } from "express";
 import logger from "../../utils/logger";
 import SuccessResponse from "../../utils/SuccessResponse";
 import ErrorResponse from "../../utils/ErrorResponse";
@@ -14,7 +14,7 @@ const generateTrackingNumber = (): string => {
     return `TRK-${timestamp}-${randomPart}`;
 };
 
-export const createCourier = async (req: Request, res: Response) => {
+export const createCourier: RequestHandler = async (req, res) => {
     try {
         const { senderName, senderAddress, recepientName, recepientAddress, additionalInfo, mobile, user_id }: CourierRequestDTO = req.body;
 
@@ -28,7 +28,7 @@ export const createCourier = async (req: Request, res: Response) => {
 
         logger.info("Create courier query was successful");
         console.log("Create courier query was successful");
-        return res.status(HTTP_STATUS.CREATED).json(
+        res.status(HTTP_STATUS.CREATED).json(
             new SuccessResponse(
                 HTTP_STATUS.CREATED,
                 "Create courier query was successful",
@@ -38,7 +38,7 @@ export const createCourier = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Create courier query was failed : ${error.message}`);
         console.log(`Create courier query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Create courier query was failed",
@@ -48,7 +48,7 @@ export const createCourier = async (req: Request, res: Response) => {
     }
 }
 
-export const getSingleCourierById = async (req: Request, res: Response) => {
+export const getSingleCourierById: RequestHandler = async (req, res) => {
     try {
 
         const { courierId } = req.params;
@@ -56,7 +56,7 @@ export const getSingleCourierById = async (req: Request, res: Response) => {
         if (!courierId) {
             logger.error("CourierId not found");
             console.log("CourierId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Get single courier query was failed",
@@ -73,7 +73,7 @@ export const getSingleCourierById = async (req: Request, res: Response) => {
         if (!existingCourier.rowCount) {
             logger.error("Courier not found");
             console.log("Courier not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Get single courier query was failed",
@@ -84,7 +84,7 @@ export const getSingleCourierById = async (req: Request, res: Response) => {
 
         logger.info("Get single courier query was successful");
         console.log("Get single courier query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
                 "Get single courier query was successful",
@@ -94,7 +94,7 @@ export const getSingleCourierById = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Get single courier query was failed : ${error.message}`);
         console.log(`Get single courier query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Get single courier query was failed",
@@ -104,7 +104,7 @@ export const getSingleCourierById = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteCourier = async (req: Request, res: Response) => {
+export const deleteCourier: RequestHandler = async (req, res) => {
     try {
 
         const { courierId } = req.params;
@@ -112,7 +112,7 @@ export const deleteCourier = async (req: Request, res: Response) => {
         if (!courierId) {
             logger.error("CourierId not found");
             console.log("CourierId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Delete courier query was failed",
@@ -129,7 +129,7 @@ export const deleteCourier = async (req: Request, res: Response) => {
         if (!existingCourier.rowCount) {
             logger.error("Courier not found");
             console.log("Courier not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Delete courier query was failed",
@@ -145,7 +145,7 @@ export const deleteCourier = async (req: Request, res: Response) => {
 
         logger.info("Delete courier query was successful");
         console.log("Delete courier query was successful");
-        return res.status(HTTP_STATUS.NO_CONTENT).json(
+        res.status(HTTP_STATUS.NO_CONTENT).json(
             new SuccessResponse(
                 HTTP_STATUS.NO_CONTENT,
                 "Delete courier query was successful",
@@ -155,7 +155,7 @@ export const deleteCourier = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Delete courier query was failed : ${error.message}`);
         console.log(`Delete courier query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Delete courier query was failed",
@@ -165,7 +165,7 @@ export const deleteCourier = async (req: Request, res: Response) => {
     }
 }
 
-export const getAllCouriersByUserId = async (req: Request, res: Response) => {
+export const getAllCouriersByUserId: RequestHandler = async (req, res) => {
     try {
 
         const { userId } = req.params;
@@ -173,7 +173,7 @@ export const getAllCouriersByUserId = async (req: Request, res: Response) => {
         if (!userId) {
             logger.error("UserId not found");
             console.log("UserId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Get all couriers by userId query was failed",
@@ -190,7 +190,7 @@ export const getAllCouriersByUserId = async (req: Request, res: Response) => {
         if (!existingUser.rowCount) {
             logger.error("User not found");
             console.log("User not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Get all couriers by userId query was failed",
@@ -206,7 +206,7 @@ export const getAllCouriersByUserId = async (req: Request, res: Response) => {
 
         logger.info("Get all couriers by userId user query was successful");
         console.log("Get all couriers by userId user query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
                 "Get all couriers by userId user query was successful",
@@ -216,7 +216,7 @@ export const getAllCouriersByUserId = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Get all couriers by userId user query was failed : ${error.message}`);
         console.log(`Get all couriers by userId user query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Get all couriers by userId user query was failed",
@@ -226,7 +226,7 @@ export const getAllCouriersByUserId = async (req: Request, res: Response) => {
     }
 }
 
-export const updateCourier = async (req: Request, res: Response) => {
+export const updateCourier: RequestHandler = async (req, res) => {
     try {
 
         const { courierId } = req.params;
@@ -235,7 +235,7 @@ export const updateCourier = async (req: Request, res: Response) => {
         if (!courierId) {
             logger.error("CourierId not found");
             console.log("CourierId not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Update courier query was failed",
@@ -252,7 +252,7 @@ export const updateCourier = async (req: Request, res: Response) => {
         if (!existingCourier.rowCount) {
             logger.error("Courier not found");
             console.log("Courier not found");
-            return res.status(HTTP_STATUS.BAD_REQUEST).json(
+            res.status(HTTP_STATUS.BAD_REQUEST).json(
                 new ErrorResponse(
                     HTTP_STATUS.BAD_REQUEST,
                     "Update courier query was failed",
@@ -270,7 +270,7 @@ export const updateCourier = async (req: Request, res: Response) => {
 
         logger.info("Update courier query was successful");
         console.log("Update courier query was successful");
-        return res.status(HTTP_STATUS.OK).json(
+        res.status(HTTP_STATUS.OK).json(
             new SuccessResponse(
                 HTTP_STATUS.OK,
                 "Update courier query was successful",
@@ -280,7 +280,7 @@ export const updateCourier = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Update courier query was failed : ${error.message}`);
         console.log(`Update courier query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Update courier query was failed",
@@ -290,7 +290,7 @@ export const updateCourier = async (req: Request, res: Response) => {
     }
 }
 
-export const getAllCouriers = async (req: Request, res: Response) => {
+export const getAllCouriers: RequestHandler = async (req, res) => {
     try {
 
         const newCourier = await db.query(
@@ -299,7 +299,7 @@ export const getAllCouriers = async (req: Request, res: Response) => {
 
         logger.info("Get all couriers query was successful");
         console.log("Get all couriers query was successful");
-        return res.status(HTTP_STATUS.CREATED).json(
+        res.status(HTTP_STATUS.CREATED).json(
             new SuccessResponse(
                 HTTP_STATUS.CREATED,
                 "Get all couriers query was successful",
@@ -309,7 +309,7 @@ export const getAllCouriers = async (req: Request, res: Response) => {
     } catch (error: any) {
         logger.error(`Get all couriers query was failed : ${error.message}`);
         console.log(`Get all couriers query was failed : ${error.message}`);
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(
             new ErrorResponse(
                 HTTP_STATUS.INTERNAL_SERVER_ERROR,
                 "Get all couriers query was failed",
