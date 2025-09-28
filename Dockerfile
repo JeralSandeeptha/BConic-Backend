@@ -16,8 +16,9 @@ RUN apk add --no-cache curl
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install -g pm2 npm@latest
+RUN npm install tsx --global
 RUN npm ci --production
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/src ./src
 
 EXPOSE 5000
 
